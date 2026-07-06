@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sim Room FC — World Cup 2026 Bracket</title>
+<meta name="description" content="We're simming every Round of 16 tie in FC26 — real results locked in as each video posts. Build your own fan bracket to the final.">
+<!-- Open Graph (Facebook, WhatsApp, LinkedIn, iMessage) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sim Room FC — World Cup 2026 Bracket">
+<meta property="og:description" content="Real results, locked in as they're simmed. Build your own fan bracket to the final.">
+<meta property="og:image" content="og-image.png">
+<meta property="og:url" content="https://simroomfc.github.io/simroomfc-bracket/">
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sim Room FC — World Cup 2026 Bracket">
+<meta name="twitter:description" content="Real results, locked in as they're simmed. Build your own fan bracket to the final.">
+<meta name="twitter:image" content="og-image.png">
+<!-- og:url set to the live GitHub Pages URL: https://simroomfc.github.io/simroomfc-bracket/ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0E1512; --surface:#16201B; --surface2:#1B2621; --line:#293A32;
+    --lime:#C6F24E; --deep:#0B6E4F; --muted:#8FA399; --text:#EAF3EC;
+    --disp:'Space Grotesk',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ink);color:var(--text);font-family:var(--body);padding:26px 16px 70px;
+    background-image:radial-gradient(circle at 50% -10%,rgba(198,242,78,.06),transparent 55%)}
+  .wrap{max-width:1200px;margin:0 auto}
+  .mark{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .play{width:32px;height:32px;border-radius:8px;background:var(--lime);display:grid;place-items:center;flex:none}
+  .mark b{font-family:var(--disp);font-weight:700;letter-spacing:1px;font-size:15px}
+  .badge{margin-left:auto;font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:1.5px;
+    background:var(--lime);color:var(--ink);padding:5px 12px;border-radius:20px}
+  h1{font-family:var(--disp);font-weight:700;font-size:clamp(26px,5.5vw,40px);line-height:1.05}
+  h1 .g{color:var(--lime)}
+  .sub{color:var(--muted);font-size:13.5px;margin-top:8px;max-width:62ch}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .lg{display:inline-flex;align-items:center;gap:7px;font-size:12px;border-radius:8px;padding:7px 12px}
+  .lg.confirmed{color:var(--lime);border:1px solid var(--deep);background:rgba(198,242,78,.06)}
+  .lg.pick{color:var(--muted);border:1px dashed var(--line)}
+  .reset{font-family:var(--disp);font-size:11px;font-weight:700;letter-spacing:1px;
+    background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;border-radius:8px;cursor:pointer}
+  .reset:hover{color:var(--lime);border-color:var(--deep)}
+
+  .bracket{display:flex;gap:14px;margin-top:26px;align-items:stretch}
+  .col{display:flex;flex-direction:column;justify-content:space-around;gap:12px;flex:1;min-width:0}
+  .col-label{font-family:var(--disp);font-size:9.5px;font-weight:700;letter-spacing:2px;color:var(--muted);
+    text-transform:uppercase;text-align:center;margin-bottom:2px}
+  .col-label b{color:var(--lime)}
+
+  .match{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .match.confirmed{border-color:var(--deep);box-shadow:0 0 0 1px rgba(198,242,78,.12) inset}
+  .team{display:flex;align-items:center;gap:9px;padding:9px 11px;cursor:pointer;user-select:none;
+    border-bottom:1px solid var(--line);transition:background .12s}
+  .team:last-child{border-bottom:none}
+  .team:hover{background:var(--surface2)}
+  .dot{width:22px;height:22px;border-radius:50%;background:var(--deep);flex:none;
+    display:grid;place-items:center;font-family:var(--disp);font-size:8px;font-weight:700;color:var(--text)}
+  .tname{font-family:var(--disp);font-weight:500;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .team.tbd{cursor:default;color:var(--muted)}
+  .team.tbd .dot{background:var(--surface2);border:1px dashed var(--line)}
+  .team.tbd .tname{font-size:11.5px;letter-spacing:.3px}
+  .team.winner{background:rgba(198,242,78,.10)}
+  .team.winner .tname{color:var(--lime);font-weight:700}
+  .team.winner .dot{background:var(--lime);color:var(--ink)}
+  .team.loser{opacity:.38}
+  .match.confirmed .team{cursor:default}
+  .match.confirmed .team:hover{background:none}
+  .confirmed-strip{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:6px 11px;background:rgba(198,242,78,.08);border-top:1px solid var(--line)}
+  .confirmed-strip .score{font-family:var(--disp);font-size:12px;font-weight:700;color:var(--text)}
+  .confirmed-strip .tag{display:inline-flex;align-items:center;gap:4px;font-family:var(--disp);font-size:9px;
+    font-weight:700;letter-spacing:1px;color:var(--ink);background:var(--lime);padding:3px 8px;border-radius:10px}
+
+  .final-col{justify-content:center}
+  .final-card{background:var(--surface);border:2px solid var(--lime);border-radius:14px;overflow:hidden;
+    box-shadow:0 0 30px -12px var(--lime)}
+  .final-tag{font-family:var(--disp);font-size:9px;font-weight:700;letter-spacing:2.5px;text-align:center;
+    background:var(--lime);color:var(--ink);padding:5px}
+  .champ{margin-top:14px;background:var(--lime);border-radius:12px;padding:12px 14px;text-align:center;display:none}
+  .champ.show{display:block}
+  .champ .lab{font-family:var(--disp);font-size:8.5px;font-weight:700;letter-spacing:2.5px;color:var(--ink);opacity:.7}
+  .champ .name{font-family:var(--disp);font-size:20px;font-weight:700;color:var(--ink)}
+
+  @media(max-width:860px){
+    .bracket{flex-direction:column}
+    .c1{order:1}.c7{order:2}.c2{order:3}.c6{order:4}.c3{order:5}.c5{order:6}.c4{order:7}
+    .col{gap:10px}
+  }
+
+  .foot{margin-top:40px;text-align:center;font-family:var(--disp);font-size:12px;letter-spacing:1px;color:var(--muted)}
+  .foot b{color:var(--lime)}
+
+  /* ---- countdown ---- */
+  .countdown{display:flex;align-items:center;gap:14px;margin-top:18px;padding:12px 16px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;flex-wrap:wrap}
+  .countdown .lab{font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+  .countdown .nums{display:flex;gap:10px}
+  .countdown .unit{text-align:center}
+  .countdown .unit b{display:block;font-family:var(--disp);font-size:20px;font-weight:700;color:var(--lime)}
+  .countdown .unit span{font-family:var(--disp);font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+
+  /* ---- share bar ---- */
+  .share{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .share-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-size:12px;font-weight:700;
+    letter-spacing:.5px;padding:10px 16px;border-radius:9px;border:1px solid var(--line);background:var(--surface2);
+    color:var(--text);cursor:pointer;text-decoration:none}
+  .share-btn:hover{border-color:var(--deep)}
+  .share-btn.primary{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+  .share-btn.primary:hover{opacity:.9}
+  .share-copied{font-size:11.5px;color:var(--lime);margin-left:4px;opacity:0;transition:opacity .2s}
+  .share-copied.show{opacity:1}
+
+  /* ---- about / privacy stub ---- */
+  .legal{margin-top:30px}
+  .legal summary{cursor:pointer;font-family:var(--disp);font-size:11px;font-weight:700;letter-spacing:1.5px;
+    color:var(--muted);text-transform:uppercase;padding:6px 0}
+  .legal summary:hover{color:var(--lime)}
+  .legal .body{color:var(--muted);font-size:12.5px;line-height:1.7;padding:8px 0 4px;max-width:70ch}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mark">
+    <span class="play"><svg width="11" height="13" viewBox="0 0 11 13"><polygon points="0,0 0,13 11,6.5" fill="#0E1512"/></svg></span>
+    <b>SIM ROOM FC</b>
+    <span class="badge">WORLD CUP 2026 · KNOCKOUTS</span>
+  </div>
+  <h1>The road to the final,<br><span class="g">simulated first.</span></h1>
+  <p class="sub">We're simming every Round of 16 tie in FC26 — real results locked in as each video posts. Everything past the Round of 16 is your fan bracket: tap a team to call your own path to the final.</p>
+
+  <div class="countdown" id="countdown">
+    <span class="lab">⏱ Real final kicks off</span>
+    <div class="nums">
+      <div class="unit"><b id="cd-days">–</b><span>days</span></div>
+      <div class="unit"><b id="cd-hours">–</b><span>hrs</span></div>
+      <div class="unit"><b id="cd-mins">–</b><span>min</span></div>
+    </div>
+    <span class="lab" style="margin-left:auto;color:var(--text)">July 19</span>
+  </div>
+
+  <div class="legend">
+    <span class="lg confirmed">✓ Confirmed — our sim, video posted</span>
+    <span class="lg pick">⚡ Tap to pick — your fan bracket</span>
+  </div>
+  <div style="margin-top:10px"><button class="reset" onclick="resetAll()">RESET FAN PICKS</button></div>
+
+  <div class="bracket">
+    <div class="col c1">
+      <div class="col-label"><b>Round of 16</b></div>
+      <div class="match" id="m1"></div>
+      <div class="match" id="m2"></div>
+      <div class="match" id="m5"></div>
+      <div class="match" id="m6"></div>
+    </div>
+    <div class="col c2">
+      <div class="col-label">Quarter-finals</div>
+      <div class="match" id="qa"></div>
+      <div class="match" id="qb"></div>
+    </div>
+    <div class="col c3">
+      <div class="col-label">Semi-final</div>
+      <div class="match" id="s1"></div>
+    </div>
+    <div class="col final-col c4">
+      <div class="col-label"><b>Final · July 19</b></div>
+      <div class="final-card"><div class="final-tag">THE FINAL</div><div class="match" id="f1" style="border:none;border-radius:0"></div></div>
+      <div class="champ" id="champ"><div class="lab">THE SIM SAYS</div><div class="name" id="champName">—</div></div>
+    </div>
+    <div class="col c5">
+      <div class="col-label">Semi-final</div>
+      <div class="match" id="s2"></div>
+    </div>
+    <div class="col c6">
+      <div class="col-label">Quarter-finals</div>
+      <div class="match" id="qc"></div>
+      <div class="match" id="qd"></div>
+    </div>
+    <div class="col c7">
+      <div class="col-label"><b>Round of 16</b></div>
+      <div class="match" id="m3"></div>
+      <div class="match" id="m4"></div>
+      <div class="match" id="m7"></div>
+      <div class="match" id="m8"></div>
+    </div>
+  </div>
+
+  <div class="share">
+    <button class="share-btn primary" onclick="shareBracket()">🔗 Share my bracket</button>
+    <a class="share-btn" id="share-x" href="#" target="_blank" rel="noopener">Share on X</a>
+    <a class="share-btn" id="share-wa" href="#" target="_blank" rel="noopener">Share on WhatsApp</a>
+    <span class="share-copied" id="share-copied">Link copied ✓</span>
+  </div>
+
+  <details class="legal">
+    <summary>About Sim Room FC</summary>
+    <div class="body">Sim Room FC simulates real football fixtures in EA SPORTS FC 26 — one sim, played straight through, no cherry-picked re-runs. Round of 16 results shown here are locked in as each video posts. Everything past the Round of 16 is an interactive fan bracket for visitors to build their own path to the final.</div>
+  </details>
+
+  <div class="foot">@simroomfc · <b>FOLLOW FOR THE REAL RESULTS</b></div>
+</div>
+
+<script>
+// ============================================================
+// RESULTS — add one line here each time a Round of 16 video posts.
+// key = match id (m1..m8, see the fixture list below)
+// score = shown on the card exactly as typed
+// winner = must exactly match one of the two team names in that match
+// ============================================================
+const RESULTS = {
+  m1: { score: "1–1 (4–3 pens)", winner: "Morocco" },
+  m2: { score: "1–1 (7–6 pens)", winner: "Paraguay" },
+  m3: { score: "2–0", winner: "Brazil" },
+  m4: { score: "0–0 (3–2 pens)", winner: "Mexico" },
+  // ...add the rest as they're simmed and posted
+};
+
+const M = {
+  m1:{teams:["Morocco","Canada"],   next:["qa",0]},
+  m2:{teams:["France","Paraguay"],  next:["qa",1]},
+  m5:{teams:["Spain","Portugal"],   next:["qb",0]},
+  m6:{teams:["Belgium","USA"],      next:["qb",1]},
+  m3:{teams:["Brazil","Norway"],    next:["qc",0]},
+  m4:{teams:["Mexico","England"],   next:["qc",1]},
+  m7:{teams:["Egypt","Argentina"],  next:["qd",0]},
+  m8:{teams:["Switzerland","Colombia"],next:["qd",1]},
+  qa:{teams:[null,null], next:["s1",0], ph:["Winner MAR / CAN","Winner FRA / PAR"]},
+  qb:{teams:[null,null], next:["s1",1], ph:["Winner ESP / POR","Winner BEL / USA"]},
+  qc:{teams:[null,null], next:["s2",0], ph:["Winner BRA / NOR","Winner MEX / ENG"]},
+  qd:{teams:[null,null], next:["s2",1], ph:["Winner EGY / ARG","Winner SUI / COL"]},
+  s1:{teams:[null,null], next:["f1",0], ph:["Winner QF 1","Winner QF 2"]},
+  s2:{teams:[null,null], next:["f1",1], ph:["Winner QF 3","Winner QF 4"]},
+  f1:{teams:[null,null], next:null,     ph:["Semi-final 1 winner","Semi-final 2 winner"]},
+};
+const CODE = t => t ? t.slice(0,3).toUpperCase() : "·";
+
+let winners = {};
+let confirmed = new Set();
+
+function propagate(id, teamName){
+  winners[id] = teamName;
+  const m = M[id];
+  if(m.next){ const [nid,slot]=m.next; M[nid].teams[slot]=teamName; }
+}
+
+function loadConfirmedResults(){
+  for(const id in RESULTS){
+    if(!M[id]) continue;
+    confirmed.add(id);
+    propagate(id, RESULTS[id].winner);
+  }
+}
+
+function render(){
+  for(const id in M){
+    const m=M[id], el=document.getElementById(id);
+    const isConfirmed = confirmed.has(id);
+    el.className = "match" + (isConfirmed ? " confirmed" : "");
+    const teamsHtml = m.teams.map((t,i)=>{
+      const tbd = !t;
+      const w = winners[id];
+      const cls = ["team", tbd?"tbd":"", w? (w===t?"winner":"loser"):""].join(" ");
+      const label = t || m.ph[i];
+      const clickable = !isConfirmed && !tbd;
+      return `<div class="${cls}" ${clickable?`onclick="pick('${id}',${i})"`:""}>
+        <span class="dot">${tbd?"?":CODE(t)}</span><span class="tname">${label}</span></div>`;
+    }).join("");
+    const stripHtml = isConfirmed
+      ? `<div class="confirmed-strip"><span class="score">${RESULTS[id].score}</span><span class="tag">✓ SIMMED</span></div>`
+      : "";
+    el.innerHTML = teamsHtml + stripHtml;
+  }
+  const fw = winners.f1;
+  const c = document.getElementById("champ");
+  document.getElementById("champName").textContent = fw || "—";
+  c.classList.toggle("show", !!fw);
+  if(typeof refreshShareTargets === "function") refreshShareTargets();
+}
+
+function clearDownstream(id){
+  const m=M[id];
+  if(!m.next) return;
+  const [nid,slot]=m.next;
+  if(M[nid].teams[slot]!==null){
+    if(winners[nid]===M[nid].teams[slot]){ delete winners[nid]; clearDownstream(nid); }
+    M[nid].teams[slot]=null;
+    if(winners[nid] && !M[nid].teams.includes(winners[nid])){ delete winners[nid]; }
+  }
+}
+
+function pick(id,i){
+  if(confirmed.has(id)) return;
+  const m=M[id], t=m.teams[i];
+  if(!t) return;
+  if(winners[id]===t) return;
+  if(winners[id]) clearDownstream(id);
+  propagate(id, t);
+  render();
+}
+
+function resetAll(){
+  winners = {};
+  for(const id of ["qa","qb","qc","qd","s1","s2","f1"]) M[id].teams=[null,null];
+  confirmed = new Set();
+  loadConfirmedResults();
+  render();
+}
+
+// ============================================================
+// Countdown to the real final (day-level; no kickoff time implied)
+// ============================================================
+function startCountdown(){
+  const target = new Date("2026-07-19T00:00:00Z").getTime();
+  function tick(){
+    const now = Date.now();
+    const diff = Math.max(0, target - now);
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    document.getElementById("cd-days").textContent = days;
+    document.getElementById("cd-hours").textContent = hours;
+    document.getElementById("cd-mins").textContent = mins;
+  }
+  tick();
+  setInterval(tick, 30000);
+}
+
+// ============================================================
+// Shareable fan brackets — picks encode into the URL, no backend.
+// Only unconfirmed picks (fan choices) are encoded; real RESULTS
+// are never overridden by a shared link.
+// ============================================================
+const PICK_ORDER = ["m3","m4","m5","m6","m7","m8","qa","qb","qc","qd","s1","s2","f1"];
+
+function parsePicksParam(){
+  const raw = new URLSearchParams(window.location.search).get("picks");
+  const map = {};
+  if(!raw) return map;
+  raw.split(",").forEach(pair=>{
+    const [id,c] = pair.split(":");
+    if(id && c) map[id]=c;
+  });
+  return map;
+}
+function applySharedPicks(){
+  const map = parsePicksParam();
+  for(const id of PICK_ORDER){
+    const c = map[id];
+    if(!c || confirmed.has(id)) continue;
+    const idx = M[id].teams.findIndex(t=>t && CODE(t)===c);
+    if(idx>-1) pick(id, idx);
+  }
+}
+function currentPicksString(){
+  return Object.entries(winners)
+    .filter(([id]) => !confirmed.has(id))
+    .map(([id,team]) => `${id}:${CODE(team)}`)
+    .join(",");
+}
+function shareBracket(){
+  const link = refreshShareTargets();
+  if(navigator.share){
+    navigator.share({ title: "My Sim Room FC bracket", url: link }).catch(()=>{});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(link).then(()=>{
+      const el = document.getElementById("share-copied");
+      el.classList.add("show");
+      setTimeout(()=>el.classList.remove("show"), 2200);
+    });
+  }
+}
+function refreshShareTargets(){
+  const url = new URL(window.location.href);
+  const picks = currentPicksString();
+  if(picks) url.searchParams.set("picks", picks); else url.searchParams.delete("picks");
+  const link = url.toString();
+  updateShareLinks(link);
+  return link;
+}
+function updateShareLinks(link){
+  const champ = winners.f1;
+  const text = champ
+    ? `My Sim Room FC bracket has ${champ} winning the World Cup. What does yours say?`
+    : `I'm building my World Cup 2026 fan bracket on Sim Room FC — come pick yours:`;
+  document.getElementById("share-x").href =
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(link)}`;
+  document.getElementById("share-wa").href =
+    `https://wa.me/?text=${encodeURIComponent(text + " " + link)}`;
+}
+
+// ============================================================
+// Boot
+// ============================================================
+loadConfirmedResults();
+applySharedPicks();
+render();
+refreshShareTargets();
+startCountdown();
+</script>
+</body>
+</html>
