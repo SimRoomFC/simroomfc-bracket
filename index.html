@@ -77,6 +77,22 @@
   .confirmed-strip .tag{display:inline-flex;align-items:center;gap:4px;font-family:var(--disp);font-size:9px;
     font-weight:700;letter-spacing:1px;color:var(--ink);background:var(--lime);padding:3px 8px;border-radius:10px}
 
+  .real-strip{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:6px 11px;border-top:1px solid var(--line)}
+  .real-strip .label{font-family:var(--disp);font-size:9px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+  .real-strip .score{font-family:var(--disp);font-size:12px;font-weight:700;color:var(--text)}
+  .real-strip.hit{background:rgba(198,242,78,.08)}
+  .real-strip.miss{background:rgba(255,77,77,.08)}
+  .real-strip .verdict{font-family:var(--disp);font-size:9px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:10px}
+  .real-strip.hit .verdict{background:var(--lime);color:var(--ink)}
+  .real-strip.miss .verdict{background:var(--red);color:var(--white,#fff)}
+
+  .accuracy{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 16px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;flex-wrap:wrap}
+  .accuracy .lab{font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+  .accuracy .score{font-family:var(--disp);font-size:20px;font-weight:700;color:var(--lime)}
+  .accuracy .note{font-size:12px;color:var(--muted)}
+
   .final-col{justify-content:center}
   .final-card{background:var(--surface);border:2px solid var(--lime);border-radius:14px;overflow:hidden;
     box-shadow:0 0 30px -12px var(--lime)}
@@ -150,6 +166,12 @@
   </div>
   <div style="margin-top:10px"><button class="reset" onclick="resetAll()">RESET FAN PICKS</button></div>
 
+  <div class="accuracy" id="accuracy">
+    <span class="lab">🎯 Sim accuracy so far</span>
+    <span class="score" id="accuracy-score">–</span>
+    <span class="note" id="accuracy-note"></span>
+  </div>
+
   <div class="bracket">
     <div class="col c1">
       <div class="col-label"><b>Round of 16</b></div>
@@ -220,6 +242,20 @@ const RESULTS = {
   // ...add the rest as they're simmed and posted
 };
 
+// ============================================================
+// REAL_RESULTS — the actual World Cup outcome, added once each real
+// match finishes. Verified against match reports; add a source note
+// in the comment when you add one. Only add a match here once it's
+// actually full-time/final — never a live or in-progress score.
+// A match with no entry here just shows the sim's card as before.
+// ============================================================
+const REAL_RESULTS = {
+  m1: { score: "3–0", winner: "Morocco" },   // Morocco won in normal time (Ounahi x2, Rahimi), not on pens
+  m2: { score: "1–0", winner: "France" },    // Mbappé penalty, 70' — Paraguay eliminated
+  m3: { score: "2–1", winner: "Norway" },    // Haaland brace (79', 90') — Brazil eliminated
+  // m4 (Mexico v England): not added yet — match still in progress
+};
+
 const M = {
   m1:{teams:["Morocco","Canada"],   next:["qa",0]},
   m2:{teams:["France","Paraguay"],  next:["qa",1]},
@@ -273,12 +309,21 @@ function render(){
     const stripHtml = isConfirmed
       ? `<div class="confirmed-strip"><span class="score">${RESULTS[id].score}</span><span class="tag">✓ SIMMED</span></div>`
       : "";
-    el.innerHTML = teamsHtml + stripHtml;
+    const real = REAL_RESULTS[id];
+    const realStripHtml = real ? (() => {
+      const hit = real.winner === RESULTS[id].winner;
+      return `<div class="real-strip ${hit ? "hit" : "miss"}">
+        <span class="label">Real result: <span class="score">${real.score} ${real.winner}</span></span>
+        <span class="verdict">${hit ? "✅ SIM CALLED IT" : "❌ SIM MISSED"}</span>
+      </div>`;
+    })() : "";
+    el.innerHTML = teamsHtml + stripHtml + realStripHtml;
   }
   const fw = winners.f1;
   const c = document.getElementById("champ");
   document.getElementById("champName").textContent = fw || "—";
   c.classList.toggle("show", !!fw);
+  updateAccuracy();
   if(typeof refreshShareTargets === "function") refreshShareTargets();
 }
 
@@ -301,6 +346,16 @@ function pick(id,i){
   if(winners[id]) clearDownstream(id);
   propagate(id, t);
   render();
+}
+
+function updateAccuracy(){
+  const ids = Object.keys(REAL_RESULTS);
+  const el = document.getElementById("accuracy-score");
+  const note = document.getElementById("accuracy-note");
+  if(!ids.length){ el.textContent = "–"; note.textContent = "No real results in yet"; return; }
+  const hits = ids.filter(id => REAL_RESULTS[id].winner === RESULTS[id].winner).length;
+  el.textContent = `${hits}/${ids.length} correct`;
+  note.textContent = "on confirmed real results";
 }
 
 function resetAll(){
