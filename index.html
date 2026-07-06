@@ -49,6 +49,7 @@
 
   .bracket{display:flex;gap:14px;margin-top:26px;align-items:stretch}
   .col{display:flex;flex-direction:column;justify-content:space-around;gap:12px;flex:1;min-width:0}
+  .c3,.c5{justify-content:center}
   .col-label{font-family:var(--disp);font-size:9.5px;font-weight:700;letter-spacing:2px;color:var(--muted);
     text-transform:uppercase;text-align:center;margin-bottom:2px}
   .col-label b{color:var(--lime)}
@@ -253,7 +254,7 @@ const REAL_RESULTS = {
   m1: { score: "3–0", winner: "Morocco" },   // Morocco won in normal time (Ounahi x2, Rahimi), not on pens
   m2: { score: "1–0", winner: "France" },    // Mbappé penalty, 70' — Paraguay eliminated
   m3: { score: "2–1", winner: "Norway" },    // Haaland brace (79', 90') — Brazil eliminated
-  // m4 (Mexico v England): not added yet — match still in progress
+  m4: { score: "3–2", winner: "England" },   // Bellingham x2, red card + Mexico pen in between — England win in normal time
 };
 
 const M = {
@@ -288,7 +289,14 @@ function loadConfirmedResults(){
   for(const id in RESULTS){
     if(!M[id]) continue;
     confirmed.add(id);
-    propagate(id, RESULTS[id].winner);
+    // The R16 card itself always highlights what the SIM called — that's the point of the card.
+    winners[id] = RESULTS[id].winner;
+    // But what advances to the quarter-final slot should be the REAL winner once known,
+    // so the bracket stays a true reflection of the actual tournament. Before the real
+    // result lands, fall back to the sim's winner as a placeholder.
+    const advancingTeam = (REAL_RESULTS[id] && REAL_RESULTS[id].winner) || RESULTS[id].winner;
+    const m = M[id];
+    if(m.next){ const [nid,slot] = m.next; M[nid].teams[slot] = advancingTeam; }
   }
 }
 
