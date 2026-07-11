@@ -1,0 +1,573 @@
+<title>PromptStack — 150 AI Prompts to Run Your Marketing</title>
+<style>
+  :root {
+    --ink: #14110F;
+    --ink-2: #211C18;
+    --bone: #F5F1E9;
+    --bone-2: #EBE5D9;
+    --ignite: #FF4326;
+    --ignite-deep: #E23315;
+    --brass: #C9A24B;
+    --ash: #6E6862;
+    --line: #D8D0C1;
+
+    --bg: var(--bone);
+    --bg-panel: #FFFFFF;
+    --bg-console: var(--ink);
+    --text: var(--ink);
+    --text-soft: var(--ash);
+    --text-console: #EFE9DD;
+    --border: var(--line);
+    --shadow: 0 1px 0 rgba(20,17,15,.04), 0 18px 40px -24px rgba(20,17,15,.28);
+
+    --mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, "Cascadia Mono", Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --wrap: 1080px;
+    --step--1: clamp(.78rem, .76rem + .1vw, .84rem);
+    --step-0: clamp(1rem, .97rem + .15vw, 1.08rem);
+    --step-1: clamp(1.2rem, 1.1rem + .5vw, 1.5rem);
+    --step-2: clamp(1.7rem, 1.4rem + 1.4vw, 2.6rem);
+    --step-3: clamp(2.4rem, 1.8rem + 3vw, 4.4rem);
+    --step-4: clamp(3rem, 2rem + 5vw, 6.2rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #100D0B;
+      --bg-panel: #1A1613;
+      --bg-console: #0A0806;
+      --text: #F3EEE4;
+      --text-soft: #A79E90;
+      --border: #2E2721;
+      --bone-2: #241F1A;
+      --shadow: 0 1px 0 rgba(0,0,0,.3), 0 24px 50px -28px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #100D0B;
+    --bg-panel: #1A1613;
+    --bg-console: #0A0806;
+    --text: #F3EEE4;
+    --text-soft: #A79E90;
+    --border: #2E2721;
+    --bone-2: #241F1A;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 24px 50px -28px rgba(0,0,0,.7);
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F1E9;
+    --bg-panel: #FFFFFF;
+    --bg-console: #14110F;
+    --text: #14110F;
+    --text-soft: #6E6862;
+    --border: #D8D0C1;
+    --bone-2: #EBE5D9;
+    --shadow: 0 1px 0 rgba(20,17,15,.04), 0 18px 40px -24px rgba(20,17,15,.28);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: 24px; }
+
+  .mono { font-family: var(--mono); }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: .6em;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 26px; height: 1px;
+    background: var(--ignite);
+  }
+  h1, h2, h3 { text-wrap: balance; line-height: 1.02; margin: 0; letter-spacing: -.02em; }
+  a { color: inherit; }
+
+  /* ---------- sticky buy bar ---------- */
+  .bar {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar-inner {
+    display: flex; align-items: center; gap: 16px;
+    padding-block: 12px;
+  }
+  .brand { font-family: var(--mono); font-weight: 700; letter-spacing: -.02em; font-size: 1.02rem; }
+  .brand b { color: var(--ignite); }
+  .bar-spacer { flex: 1; }
+  .bar-price { font-family: var(--mono); font-size: var(--step--1); color: var(--text-soft); }
+  .bar-price s { opacity: .55; }
+  .bar-price b { color: var(--text); font-size: 1rem; }
+
+  .btn {
+    --btn-bg: var(--ignite);
+    display: inline-flex; align-items: center; gap: .55em;
+    background: var(--btn-bg); color: #fff;
+    font-family: var(--mono); font-weight: 700; font-size: .9rem;
+    letter-spacing: .01em;
+    padding: .7em 1.2em; border-radius: 2px; border: 0;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 0 0 0 var(--ignite);
+    transition: transform .12s ease, box-shadow .2s ease, background .15s ease;
+  }
+  .btn:hover { background: var(--ignite-deep); transform: translateY(-1px); box-shadow: 0 10px 22px -10px var(--ignite); }
+  .btn:active { transform: translateY(0); }
+  .btn:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+  .btn .arw { transition: transform .15s ease; }
+  .btn:hover .arw { transform: translateX(3px); }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+  .btn.ghost:hover { border-color: var(--ignite); color: var(--ignite); transform: none; }
+
+  /* ---------- hero ---------- */
+  .hero { padding-top: clamp(48px, 7vw, 92px); padding-bottom: clamp(40px, 6vw, 72px); }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero h1 {
+    font-size: var(--step-4);
+    font-weight: 800;
+    margin-top: 18px;
+  }
+  .hero h1 .hl { color: var(--ignite); }
+  .lede { font-size: var(--step-1); color: var(--text-soft); margin-top: 22px; max-width: 30ch; }
+  .lede b { color: var(--text); font-weight: 600; }
+  .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; }
+  .microtrust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 26px; font-family: var(--mono); font-size: var(--step--1); color: var(--text-soft); }
+  .microtrust span { display: inline-flex; align-items: center; gap: .5em; }
+  .microtrust b { color: var(--brass); }
+
+  /* ---------- console card ---------- */
+  .console {
+    background: var(--bg-console);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.05);
+  }
+  .console-top { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: #3a332c; }
+  .dot.on { background: var(--ignite); }
+  .console-tag { margin-left: auto; font-family: var(--mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #7c746a; }
+  .console-body { padding: 20px; font-family: var(--mono); font-size: .86rem; line-height: 1.7; color: var(--text-console); }
+  .line-you { color: #8f867a; }
+  .line-prompt { color: #F3EEE4; }
+  .line-prompt .br { color: var(--brass); }
+  .divider-min { height: 1px; background: rgba(255,255,255,.08); margin: 16px 0; }
+  .line-out { color: var(--ignite); }
+  .typed { display: block; white-space: pre-wrap; }
+  .caret { display: inline-block; width: 8px; height: 1.05em; background: var(--ignite); vertical-align: -2px; margin-left: 2px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+
+  /* ---------- section frame ---------- */
+  section { padding-block: clamp(56px, 8vw, 104px); }
+  .sec-head { max-width: 52ch; margin-bottom: clamp(32px, 4vw, 52px); }
+  .sec-head h2 { font-size: var(--step-2); font-weight: 800; margin-top: 16px; }
+  .sec-head p { color: var(--text-soft); font-size: var(--step-1); margin: 18px 0 0; }
+
+  .rule { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ---------- problem ---------- */
+  .problem { background: var(--bone-2); }
+  .cost-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  @media (max-width: 700px) { .cost-grid { grid-template-columns: 1fr; } }
+  .cost { background: var(--bg-panel); padding: 28px 24px; }
+  .cost .n { font-family: var(--mono); font-size: var(--step-2); font-weight: 700; color: var(--ignite); font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
+  .cost h3 { font-size: 1.05rem; margin: 10px 0 6px; font-weight: 700; }
+  .cost p { margin: 0; color: var(--text-soft); font-size: .96rem; }
+
+  /* ---------- inside grid ---------- */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .cat {
+    background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 24px; display: flex; flex-direction: column; gap: 6px;
+    position: relative; transition: border-color .18s ease, transform .18s ease;
+  }
+  .cat:hover { border-color: var(--ignite); transform: translateY(-2px); }
+  .cat-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .cat-idx { font-family: var(--mono); font-size: .74rem; letter-spacing: .12em; color: var(--text-soft); }
+  .cat-count { font-family: var(--mono); font-weight: 700; color: var(--brass); font-variant-numeric: tabular-nums; font-size: .9rem; }
+  .cat h3 { font-size: 1.22rem; font-weight: 700; margin-top: 4px; }
+  .cat p { color: var(--text-soft); font-size: .94rem; margin: 4px 0 0; }
+  .tally { margin-top: 40px; text-align: center; font-family: var(--mono); font-size: var(--step--1); letter-spacing: .1em; text-transform: uppercase; color: var(--text-soft); }
+  .tally b { color: var(--ignite); font-size: var(--step-1); letter-spacing: -.02em; }
+
+  /* ---------- try it (copy prompts) ---------- */
+  .try { background: var(--bg-console); color: var(--text-console); }
+  .try .eyebrow { color: #8f867a; }
+  .try .sec-head h2 { color: #fff; }
+  .try .sec-head p { color: #a79e90; }
+  .prompt-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 8px; padding: 20px 20px 18px;
+    display: flex; flex-direction: column; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .pc-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .pc-label { font-family: var(--mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); }
+  .pc-text { font-family: var(--mono); font-size: .88rem; line-height: 1.7; color: #E7E1D5; margin: 0; white-space: pre-wrap; }
+  .pc-text .br { color: var(--ignite); }
+  .copy {
+    font-family: var(--mono); font-size: .74rem; letter-spacing: .04em;
+    background: transparent; color: #cfc7ba; border: 1px solid rgba(255,255,255,.18);
+    padding: .5em .85em; border-radius: 2px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: .5em; transition: all .15s ease; white-space: nowrap;
+  }
+  .copy:hover { border-color: var(--ignite); color: #fff; }
+  .copy:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+  .copy.done { border-color: var(--brass); color: var(--brass); }
+
+  /* ---------- pricing ---------- */
+  .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+  @media (max-width: 820px) { .tiers { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
+  .tier {
+    background: var(--bg-panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 30px 26px; display: flex; flex-direction: column; gap: 18px;
+  }
+  .tier.feat { border-color: var(--ignite); box-shadow: 0 0 0 1px var(--ignite), var(--shadow); position: relative; }
+  .tier.feat::before {
+    content: "Most popular"; position: absolute; top: -11px; left: 26px;
+    background: var(--ignite); color: #fff; font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .12em; text-transform: uppercase; padding: .35em .7em; border-radius: 2px;
+  }
+  .tier-name { font-family: var(--mono); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-soft); }
+  .tier-price { display: flex; align-items: baseline; gap: 8px; }
+  .tier-price .amt { font-size: var(--step-2); font-weight: 800; letter-spacing: -.03em; }
+  .tier-price s { color: var(--text-soft); font-family: var(--mono); font-size: 1rem; }
+  .tier-for { color: var(--text-soft); font-size: .92rem; margin: -6px 0 0; }
+  .tier ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .tier li { display: flex; gap: 10px; font-size: .95rem; line-height: 1.45; }
+  .tier li .tick { color: var(--brass); flex: none; font-family: var(--mono); }
+  .tier .btn { justify-content: center; }
+
+  /* ---------- testimonials ---------- */
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 820px) { .quotes { grid-template-columns: 1fr; } }
+  .quote { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 8px; padding: 26px; display: flex; flex-direction: column; gap: 16px; }
+  .quote p { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+  .stars { color: var(--brass); letter-spacing: .15em; font-size: .8rem; }
+  .who { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+  .av { width: 38px; height: 38px; border-radius: 50%; background: var(--ignite); color: #fff; font-family: var(--mono); font-weight: 700; display: grid; place-items: center; font-size: .9rem; flex: none; }
+  .who .nm { font-weight: 600; font-size: .92rem; }
+  .who .rl { color: var(--text-soft); font-size: .82rem; font-family: var(--mono); }
+
+  /* ---------- faq ---------- */
+  .faq details { border-bottom: 1px solid var(--border); }
+  .faq summary { cursor: pointer; list-style: none; padding: 22px 0; display: flex; justify-content: space-between; gap: 20px; align-items: center; font-weight: 600; font-size: 1.1rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary .pm { font-family: var(--mono); color: var(--ignite); flex: none; transition: transform .2s ease; }
+  .faq details[open] summary .pm { transform: rotate(45deg); }
+  .faq p { margin: 0 0 22px; color: var(--text-soft); max-width: 62ch; }
+
+  /* ---------- final ---------- */
+  .final { background: var(--bg-console); color: var(--text-console); text-align: center; }
+  .final h2 { color: #fff; font-size: var(--step-3); font-weight: 800; }
+  .final p { color: #a79e90; font-size: var(--step-1); max-width: 46ch; margin: 20px auto 0; }
+  .final .btn { margin-top: 34px; font-size: 1rem; padding: .95em 1.8em; }
+  .final .fine { margin-top: 20px; font-family: var(--mono); font-size: var(--step--1); color: #7c746a; }
+
+  footer { padding-block: 40px; }
+  .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-family: var(--mono); font-size: var(--step--1); color: var(--text-soft); }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+
+<div class="bar">
+  <div class="wrap bar-inner">
+    <span class="brand">Prompt<b>Stack</b></span>
+    <span class="bar-spacer"></span>
+    <span class="bar-price"><s>$49</s> &nbsp;<b>$29</b></span>
+    <a class="btn" href="#pricing">Get the pack <span class="arw">→</span></a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">150 prompts · one payment · no subscription</span>
+      <h1>Stop staring at the <span class="hl">blank chat.</span></h1>
+      <p class="lede">PromptStack is <b>150 battle-tested AI prompts</b> that write your marketing — posts, emails, ads, landing pages — while you run the business.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#pricing">Get PromptStack — $29 <span class="arw">→</span></a>
+        <a class="btn ghost" href="#try">Try a prompt free</a>
+      </div>
+      <div class="microtrust">
+        <span><b>★ 4.9</b> / 2,400+ buyers</span>
+        <span><b>✓</b> Works in ChatGPT, Claude &amp; Gemini</span>
+        <span><b>↺</b> 30-day refund</span>
+      </div>
+    </div>
+
+    <div class="console" aria-hidden="true">
+      <div class="console-top">
+        <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+        <span class="console-tag">promptstack · live</span>
+      </div>
+      <div class="console-body">
+        <div class="line-you">// you paste ↓</div>
+        <div class="line-prompt">Turn this idea into a week of posts: <span class="br">[launching a waitlist]</span>. 5 posts, vary the format, end 3 with a soft CTA.</div>
+        <div class="divider-min"></div>
+        <div class="line-you">// your AI, 4 seconds later ↓</div>
+        <div class="line-out"><span class="typed" id="typed"></span><span class="caret"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<hr class="rule">
+
+<section class="problem">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The blank-chat tax</span>
+      <h2>AI is only as good as what you ask it.</h2>
+      <p>Everyone has the tools. Almost nobody has the prompts. So the blank cursor wins, and the marketing doesn't get done.</p>
+    </div>
+    <div class="cost-grid reveal">
+      <div class="cost">
+        <div class="n">40<span style="font-size:1.4rem">min</span></div>
+        <h3>Lost per session</h3>
+        <p>Re-explaining your business, your voice, and what you actually want — every single time.</p>
+      </div>
+      <div class="cost">
+        <div class="n">7/10</div>
+        <h3>Outputs feel generic</h3>
+        <p>Vague prompts get vague copy. It sounds like a robot, so you rewrite it by hand anyway.</p>
+      </div>
+      <div class="cost">
+        <div class="n">$0</div>
+        <h3>Marketing shipped</h3>
+        <p>The stuff that grows the business stays a "later" task — because starting is the hard part.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">What's inside</span>
+      <h2>7 categories. 150 prompts. Every marketing job you actually do.</h2>
+      <p>Each prompt is fill-in-the-bracket ready and tuned to return options you can pick from — not one stiff paragraph.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">01</span><span class="cat-count">18 prompts</span></div><h3>Positioning &amp; Messaging</h3><p>One-liners, before/after stories, and the exact words your customers use.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">02</span><span class="cat-count">24 prompts</span></div><h3>Content &amp; Social</h3><p>Hooks, a week of posts from one idea, threads, and a 30-day calendar engine.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">03</span><span class="cat-count">20 prompts</span></div><h3>Email &amp; Newsletters</h3><p>Welcome sequences, subject lines, launches, and win-back emails.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">04</span><span class="cat-count">22 prompts</span></div><h3>Sales &amp; Landing Pages</h3><p>Full page drafts, objection-crushing FAQs, and pricing copy that guides the choice.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">05</span><span class="cat-count">18 prompts</span></div><h3>Ads &amp; Growth</h3><p>Ad angles, hooks, retargeting, referral copy, and message-match checks.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">06</span><span class="cat-count">16 prompts</span></div><h3>Customer &amp; Ops</h3><p>Support replies, testimonial asks, refunds, and churn-save offers.</p></div>
+      <div class="cat reveal"><div class="cat-top"><span class="cat-idx">07</span><span class="cat-count">12 prompts</span></div><h3>Strategy &amp; Planning</h3><p>90-day plans, funnel-leak audits, and a "what to stop doing" review.</p></div>
+      <div class="cat reveal" style="background:var(--ink); color:var(--text-console); border-color:var(--ink);"><div class="cat-top"><span class="cat-idx" style="color:#8f867a">+</span><span class="cat-count">bonus</span></div><h3 style="color:#fff">The Context Card</h3><p style="color:#a79e90">Fill it once, paste it before any prompt — every output gets sharper instantly.</p></div>
+    </div>
+    <p class="tally reveal"><b>150</b> prompts · <b>0</b> fluff · <b>1</b> payment</p>
+  </div>
+</section>
+
+<section class="try" id="try">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Try before you buy</span>
+      <h2>Three real prompts from the pack.</h2>
+      <p>Copy one, paste it into your AI, swap the <span style="color:var(--ignite)">[brackets]</span>. This is exactly what all 150 feel like.</p>
+    </div>
+
+    <div class="prompt-card reveal">
+      <div class="pc-head">
+        <span class="pc-label">02 · Content — Hook machine</span>
+        <button class="copy" type="button">⧉ Copy</button>
+      </div>
+      <p class="pc-text">Write 15 opening lines (hooks) for a post about <span class="br">[TOPIC]</span>. Use these hook types, at least 3 each: contrarian, curiosity gap, specific number, personal confession, "here's what nobody tells you." No clickbait I can't back up. Rank them 1–15 by scroll-stopping power.</p>
+    </div>
+
+    <div class="prompt-card reveal">
+      <div class="pc-head">
+        <span class="pc-label">01 · Positioning — The one-liner</span>
+        <button class="copy" type="button">⧉ Copy</button>
+      </div>
+      <p class="pc-text">You are a positioning strategist. My business: <span class="br">[WHAT YOU SELL]</span> for <span class="br">[WHO IT'S FOR]</span>. The #1 pain I remove is <span class="br">[PAIN]</span>. Write 5 one-line descriptions for the top of my homepage. Under 12 words each, no jargon, lead with the outcome. Then tell me which is strongest and why.</p>
+    </div>
+
+    <div class="prompt-card reveal">
+      <div class="pc-head">
+        <span class="pc-label">03 · Email — Subject lines worth testing</span>
+        <button class="copy" type="button">⧉ Copy</button>
+      </div>
+      <p class="pc-text">Write 12 subject lines for an email about <span class="br">[TOPIC]</span>. Mix curiosity, benefit, and urgency styles. Keep them under 45 characters so they don't truncate on mobile. Flag any that might trip spam filters.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-inline:auto; text-align:center;">
+      <span class="eyebrow" style="justify-content:center; display:flex;">Pricing</span>
+      <h2>Buy once. Use forever.</h2>
+      <p>No subscription, no login, no per-seat nonsense. A file you own.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier reveal">
+        <span class="tier-name">Starter</span>
+        <div class="tier-price"><span class="amt">$12</span></div>
+        <p class="tier-for">The taste test.</p>
+        <ul>
+          <li><span class="tick">✓</span> 40 top prompts (Content + Social)</li>
+          <li><span class="tick">✓</span> The Context Card</li>
+          <li><span class="tick">✓</span> Works in any AI</li>
+          <li><span class="tick">✓</span> Lifetime access</li>
+        </ul>
+        <a class="btn ghost" href="#" style="justify-content:center">Get Starter</a>
+      </div>
+
+      <div class="tier feat reveal">
+        <span class="tier-name">Complete Pack</span>
+        <div class="tier-price"><span class="amt">$29</span><s>$49</s></div>
+        <p class="tier-for">Everything you need to run marketing solo.</p>
+        <ul>
+          <li><span class="tick">✓</span> All <b>150</b> prompts, all 7 categories</li>
+          <li><span class="tick">✓</span> The Context Card + usage guide</li>
+          <li><span class="tick">✓</span> Notion &amp; plain-text versions</li>
+          <li><span class="tick">✓</span> Free updates for life</li>
+          <li><span class="tick">✓</span> 30-day money-back guarantee</li>
+        </ul>
+        <a class="btn" href="#" style="justify-content:center">Get the Complete Pack →</a>
+      </div>
+
+      <div class="tier reveal">
+        <span class="tier-name">Pro + Bonuses</span>
+        <div class="tier-price"><span class="amt">$59</span></div>
+        <p class="tier-for">For freelancers &amp; agencies.</p>
+        <ul>
+          <li><span class="tick">✓</span> Everything in Complete</li>
+          <li><span class="tick">✓</span> Client-ready brand-voice trainer</li>
+          <li><span class="tick">✓</span> 30-day launch calendar template</li>
+          <li><span class="tick">✓</span> Commercial license (use for clients)</li>
+          <li><span class="tick">✓</span> Priority prompt requests</li>
+        </ul>
+        <a class="btn ghost" href="#" style="justify-content:center">Get Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">2,400+ buyers</span>
+      <h2>It's the difference between owning AI and being owned by the blank page.</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I wrote a whole launch email sequence on a Sunday morning with coffee. Used to take me a week of dread."</p>
+        <div class="who"><span class="av">MR</span><div><div class="nm">Maya R.</div><div class="rl">Ceramics studio owner</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="stars">★★★★★</div>
+        <p>"The Context Card alone is worth the price. Every output suddenly sounded like me instead of a press release."</p>
+        <div class="who"><span class="av">DK</span><div><div class="nm">Dev K.</div><div class="rl">Solo SaaS founder</div></div></div>
+      </div>
+      <div class="quote reveal">
+        <div class="stars">★★★★★</div>
+        <p>"I use the ad-angle prompts for every client now. Billed it back on the first project. Easiest $59 I've spent."</p>
+        <div class="who"><span class="av">TA</span><div><div class="nm">Tomás A.</div><div class="rl">Freelance marketer</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap" style="max-width:800px;">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Questions</span>
+      <h2>The honest FAQ.</h2>
+    </div>
+    <div class="reveal">
+      <details><summary>Which AI does this work with?<span class="pm">+</span></summary><p>All of them. ChatGPT (free or Plus), Claude, Gemini, Copilot, Grok — anything you can paste text into. The prompts are model-agnostic by design.</p></details>
+      <details><summary>Isn't this just stuff I could write myself?<span class="pm">+</span></summary><p>You could — the same way you could write your own contracts or design your own logo. PromptStack is the shortcut: 150 prompts already structured to return usable options, so you skip the trial-and-error and the "why does this sound like a robot" rewrites.</p></details>
+      <details><summary>What format do I get?<span class="pm">+</span></summary><p>Instant download: a clean PDF, a plain-text file for fast copy-paste, and a Notion template you can duplicate. No app, no login, no subscription.</p></details>
+      <details><summary>Will it sound like everyone else who bought it?<span class="pm">+</span></summary><p>No — that's what the Context Card fixes. You feed the AI your business, audience, and voice once, and every prompt bends its output to sound like you.</p></details>
+      <details><summary>What if it's not for me?<span class="pm">+</span></summary><p>Email within 30 days and get a full refund, no questions and no hard feelings. The risk is entirely on us.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 class="reveal">Your marketing, written by tonight.</h2>
+    <p class="reveal">150 prompts. One coffee's worth of money. The blank chat never wins again.</p>
+    <div class="reveal"><a class="btn" href="#pricing">Get PromptStack — $29 <span class="arw">→</span></a></div>
+    <p class="fine reveal">Instant download · 30-day refund · works in every major AI</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>Prompt<b style="color:var(--ignite)">Stack</b> © 2026</span>
+    <span>A digital product demo · built to sell</span>
+  </div>
+</footer>
+
+<script>
+  // Typed hero output
+  (function () {
+    var el = document.getElementById('typed');
+    if (!el) return;
+    var text = "Mon — Contrarian take: \"Waitlists are lazy marketing. Here's the version that actually converts…\"\nWed — Behind the build (story). CTA: reply 'in' →\nFri — 5-point checklist before you open the list.";
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { el.textContent = text; return; }
+    var i = 0;
+    function tick() {
+      if (i > text.length) return;
+      el.textContent = text.slice(0, i);
+      i++;
+      setTimeout(tick, 16);
+    }
+    setTimeout(tick, 700);
+  })();
+
+  // Copy buttons
+  document.querySelectorAll('.prompt-card').forEach(function (card) {
+    var btn = card.querySelector('.copy');
+    var text = card.querySelector('.pc-text').innerText;
+    btn.addEventListener('click', function () {
+      var done = function () {
+        btn.textContent = '✓ Copied';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = '⧉ Copy'; btn.classList.remove('done'); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(done);
+      } else {
+        var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
+        ta.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(ta); done();
+      }
+    });
+  });
+
+  // Scroll reveal
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (n) { io.observe(n); });
+</script>
